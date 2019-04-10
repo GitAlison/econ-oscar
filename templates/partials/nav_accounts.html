@@ -1,0 +1,76 @@
+{% load i18n %}
+<div class="top_header_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-5 col-sm-6">
+                <!--  Top Social bar start -->
+                <div class="top_social_bar">
+                    <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                    <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                    <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                    <a href="#"><i class="fa fa-skype" aria-hidden="true"></i></a>
+                    <a href="#"><i class="fa fa-dribbble" aria-hidden="true"></i></a>
+                </div>
+            </div>
+            <!--  Login Register Area -->
+            <div class="col-7 col-sm-6">
+                <div class="signup-search-area d-flex align-items-center justify-content-end">
+                    
+
+                    <div class="login_register_area d-flex">
+                        
+
+
+
+
+
+
+
+
+                        {% if user.is_authenticated %}
+                        {% block nav_account_navbar_authenticated %}
+
+                        {% if num_unread_notifications > 0 %}
+                        {# If user has new notifications - we change account link to go to inbox #}
+                        <div class="login">
+                            <a href="{% url 'customer:notifications-inbox' %}">
+                                <i class="icon-user"></i>
+                                {% trans "Account" %}
+                                <span class="label label-warning">{{ num_unread_notifications }}</span>
+                        </div>
+
+                        </a>
+                        {% else %}
+                        <div class="login">
+
+                            <a href="{% url 'customer:summary' %}"><i class="icon-user"></i> {% trans "Account" %}</a>
+                        </div>
+                        {% endif %}
+
+                        {% if user.is_staff or perms.partner.dashboard_access %}
+                        <div class="login">
+
+                            <a href="{% url 'dashboard:index' %}"><i class="icon-list-ul"></i>
+                                {% trans "Dashboard" %}</a>
+                        </div>
+                        {% endif %}
+                        <div class="login">
+
+                            <a id="logout_link" href="{% url 'customer:logout' %}"><i class="icon-signout"></i>
+                                {% trans "Logout" %}</a>
+                        </div>
+                                        {% endblock %}
+                        {% else %}
+                        <div class="login">
+                            <a id="login_link" href="{% url 'customer:login' %}"><i class="icon-signin"></i>
+                                {% trans "Login or register" %}</a>
+
+                        </div>
+                        {% endif %}
+                </div>
+                
+            </div>
+            
+        </div>
+    </div>
+</div>
